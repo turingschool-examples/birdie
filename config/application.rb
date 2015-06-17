@@ -8,12 +8,12 @@ Bundler.require(*Rails.groups)
 
 module Birdie
   class Application < Rails::Application
-    config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Origin'   => '*',
-      'Access-Control-Allow-Methods'  => %w(POST PUT DELETE GET).join(','),
-      'Access-Control-Request-Method' => 'OPTIONS',
-      'Access-Control-Allow-Headers'  => %w(Origin Accept Content-Type X-Requested-With X-CSRF-Token).join(",")
-    }
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :put, :delete, :options]
+      end
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

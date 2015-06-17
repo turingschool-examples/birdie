@@ -14,6 +14,7 @@ gem 'unicorn'
 gem 'responders'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'faker'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
   gem 'pry'
