@@ -1,0 +1,18 @@
+<div class="container">
+  <div class='col-sm-12'>
+  <h1>Welcome to Birdie</h1>
+  <h3>These are the available routes</h3>
+
+  </div>
+  <% Rails.application.routes.routes.each do |route| %>
+    <% if route.path.spec.to_s.starts_with?("/api") %>
+      <div class='col-sm-2'>
+        <%= route.verb.to_s.gsub("$)", "").gsub("(?-mix:^", "") %>
+      </div>
+      <div class='col-sm-10'>
+        <%= route.path.spec.to_s.gsub("(.:format)", "") %>
+      </div>
+    <% end %>
+    <br>
+  <% end %>
+</div>
