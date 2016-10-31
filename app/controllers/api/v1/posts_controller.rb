@@ -1,27 +1,45 @@
 class Api::V1::PostsController < ApplicationController
-  respond_to :json
+  before_action :set_post, only: [:show, :update, :destroy]
 
   def index
-    respond_with Post.all
+    @posts = Post.all
+    render json: @posts
   end
 
   def show
-    respond_with Post.find_by(id: params[:id])
+    @post = Post.find_by(id: params[:id])
+    render json: @post
   end
 
   def create
-    respond_with Post.create(post_params), location: nil
+    @post = Post.new(post_params)
+
+    if @post.save
+      render json: @post, status: :created, location: @post
+    else
+      render json: @post.errors, status: :unprocessable_entity
+    end
   end
 
   def update
-    respond_with Post.update(params[:id], post_params), location: nil
+    if @post.update(post_params)
+      head :no_content
+    else
+      render json: @post.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    respond_with Post.destroy(params[:id])
+    @post.destroy
+
+    head :no_content
   end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
   def post_params
     params.require(:post).permit(:description)
