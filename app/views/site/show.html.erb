@@ -1,9 +1,9 @@
 <div class="container">
   <div class='col-sm-12'>
-  <h1>Welcome to Birdie</h1>
-  <h3>These are the available routes</h3>
-
+    <h1>Welcome to Birdie</h1>
+    <h3>These are the available routes:</h3>
   </div>
+
   <% Rails.application.routes.routes.each do |route| %>
     <% if route.path.spec.to_s.starts_with?("/api") %>
       <div class='col-sm-2'>
@@ -15,4 +15,19 @@
     <% end %>
     <br>
   <% end %>
+
+  <div class='col-sm-12'>
+    <p>
+      Note: This API expects posts to be created and updated with a <code>post</code> root key.
+    </p>
+    <p>
+      For example:
+    </p>
+    <code>
+      { 'post': {
+          'description': 'Example'
+        }
+      }
+    </code>
+  </div>
 </div>
